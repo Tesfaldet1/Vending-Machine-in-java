@@ -1,1 +1,1 @@
-# model
+# Vending Machine in java
