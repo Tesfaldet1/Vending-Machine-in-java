@@ -7,7 +7,7 @@ public class Marshmallows extends Product{
     private double price = 100.00;
 
 
-    public Marshmallows() {
+    public Marshmallows(String name, double price) {
         this.id = ++sequencer;
         this.name = name;
         this.price = price;

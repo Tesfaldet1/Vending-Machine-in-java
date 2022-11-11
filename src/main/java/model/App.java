@@ -11,20 +11,33 @@ public class App
 {
     public static void main(String[] args) {
 
-        Candy candy= new Candy();
-        System.out.println(candy.examine());
 
-        Goodis goodis = new Goodis();
-        System.out.println(goodis.examine());
-        VendingMachineImpl vendingMachineImpl= new VendingMachineImpl(1, Currency.ONE_KRONOR);
-        System.out.println(vendingMachineImpl.addCurrency("",1));
 
-        Marshmallows marshmallows = new Marshmallows();
-        System.out.println(marshmallows.getPrice());
+        Product[] products = {
+                new Candy(5, "candy"),
+                new Candy(5, "candy"),
+                new Goodis(50, "goodis"),
+                new Goodis(50, "goodis"),
+                new Marshmallows(  "marshmallows", 100),
+                new Marshmallows("marshmallows", 100)
+        };
+        VendingMachine vendingMachine = new VendingMachineImpl(products);
 
-        Scanner scanner = new Scanner(System.in);
+        for (String string : vendingMachine.getProducts()) {
+            System.out.println(string);
+            System.out.println("-----");
+        }
 
+        vendingMachine.addCurrency(50);
+        Product Candy = vendingMachine.request(0);
+        System.out.println(Candy.use());
+        System.out.println(vendingMachine.getBalance());
 
 
     }
 }
+
+
+
+
+

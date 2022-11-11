@@ -2,20 +2,25 @@ package service;
 
 import model.Product;
 
-import java.util.Arrays;
-
 public class VendingMachineImpl implements VendingMachine {
-    private double addCurrency;
+    //private double addCurrency;
     private int money;
-    private Product[] products;
+    private static Product[] products;
     private int depositPool;
-    private Currency checkCurrency;
+    public static int [] VALID_DENOMINATIONS = {1,2,5,10,20,50,100,500,1000};
+    public VendingMachineImpl(Product[] products){
+        this.products =products;
+    }
+
 
     public VendingMachineImpl(int depositPool, Currency checkCurrency) {
         this.depositPool = depositPool;
-        this.checkCurrency = checkCurrency;
+
 
     }
+
+
+
 
     public void setProducts(Product[] products) {
         this.products = products;
@@ -23,49 +28,28 @@ public class VendingMachineImpl implements VendingMachine {
 
     public int getDepositPool() {
         depositPool = depositPool;
-        return 0;
+        return depositPool;
     }
 
     public void setDepositPool(int depositPool) {
         this.depositPool = depositPool;
     }
 
-    public Currency getCheckCurrency() {
-        return checkCurrency;
-    }
 
-    public void setCheckCurrency(Currency checkCurrency) {
-        this.checkCurrency = checkCurrency;
-    }
 
-    public void registeredCertificate(Product Produc) {
-        if (products == null) products = new Product[0];
-        Product[] newArray = Arrays.copyOf(products, products.length + 1);
-        newArray[newArray.length - 1] = Produc;
-        products = newArray;
+
+    public void Marshmallows(Product [] products1) {
+        this.products = products;
     }
 
     @Override
-    public double addCurrency(String type, double amount) { // 6
-        this.addCurrency = amount;
-        switch (type) {
-
-
-        }
-        double balance = amount;
-        while (balance > 0) {
-
-        }
-        //System.out.println("WELCOME TO THE VENDING MACHINE");
-        for (Product product : products) {
-            if (addCurrency == Currency.getValue()) {
-                amount = addCurrency;
+    public void addCurrency(double amount) { // 6
+        for (int validDenomination : VALID_DENOMINATIONS) {
+            if (validDenomination == amount) {
+                depositPool += amount;
             }
         }
-
-        return amount;
     }
-
     @Override
     public int getBalance() {
         for (Product product : products) {
@@ -86,19 +70,27 @@ public class VendingMachineImpl implements VendingMachine {
 
     @Override
     public Product request(int id) {
-        for (Product product : products) {
-            if (id == product.getId()) {
-                return product;
+       for  (Product product : products) {
+            if (product.getId() == id) {
+                if (product.getPrice() <= depositPool) {
+                    depositPool = (int) (depositPool - product.getPrice());
+                    return product;
+                } else {
+                    throw new RuntimeException("Product " + product.getProductName() + " is too expensive");
+                }
             }
         }
-        return null;
+        throw new RuntimeException("Could not find Product with id " + id);
     }
+
 
     @Override
     public int endSession() {
-        products = new Product[]{};
-        return 0;
+        int temp = depositPool;
+        depositPool = 0;
+        return temp;
     }
+
 
     @Override
     public String getDescription(int id) {
@@ -113,14 +105,12 @@ public class VendingMachineImpl implements VendingMachine {
 
     @Override
     public String[] getProducts() {
-        for (Product product : products) {
-            if (Product.getSequencer() != 0)
-                return new String[]{product.examine()
-                };
+        String[] productsAsString = new String[products.length];
+        for (int i = 0; i < products.length; i++) {
+            productsAsString[i] = products[i].examine().concat(" price: " + products[i].getPrice());
         }
-            return new String[0];
-        }
-
+        return productsAsString;
+    }
     }
 
 
