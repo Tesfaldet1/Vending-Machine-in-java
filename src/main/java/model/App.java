@@ -14,8 +14,8 @@ public class App
 
 
         Product[] products = {
-                new Candy(5, "candy"),
-                new Candy(5, "candy"),
+                new Candy(20, "candy"),
+                new Candy(20, "candy"),
                 new Goodis(50, "goodis"),
                 new Goodis(50, "goodis"),
                 new Marshmallows(  "marshmallows", 100),
@@ -28,7 +28,7 @@ public class App
             System.out.println("-----");
         }
 
-        vendingMachine.addCurrency(50);
+        vendingMachine.addCurrency(20);
         Product Candy = vendingMachine.request(0);
         System.out.println(Candy.use());
         System.out.println(vendingMachine.getBalance());

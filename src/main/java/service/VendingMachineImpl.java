@@ -12,15 +12,9 @@ public class VendingMachineImpl implements VendingMachine {
         this.products =products;
     }
 
-
     public VendingMachineImpl(int depositPool, Currency checkCurrency) {
         this.depositPool = depositPool;
-
-
     }
-
-
-
 
     public void setProducts(Product[] products) {
         this.products = products;
@@ -55,16 +49,13 @@ public class VendingMachineImpl implements VendingMachine {
         for (Product product : products) {
             if (money == product.getPrice()) {
                 System.out.println("enjoy your product");
+                break;
             } else if (money > product.getPrice()) {
                 int total = (int) (money - product.getPrice());
 
             } else if (money < product.getPrice()) {
-                System.out.println("not enough money to buy thr product");
-
             }
         }
-
-
         return depositPool;
     }
 
@@ -80,17 +71,15 @@ public class VendingMachineImpl implements VendingMachine {
                 }
             }
         }
-        throw new RuntimeException("Could not find Product with id " + id);
+       return null;
+       // throw new RuntimeException("Could not find Product with id " + id);
     }
-
-
     @Override
     public int endSession() {
         int temp = depositPool;
         depositPool = 0;
         return temp;
     }
-
 
     @Override
     public String getDescription(int id) {
